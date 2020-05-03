@@ -16,7 +16,9 @@
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div>@include('header_admin')</div>
+    <div>
+        @include('header_admin')
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <center><h4>Daftar Sewa</h4></center><hr>
