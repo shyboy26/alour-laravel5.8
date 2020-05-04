@@ -24,7 +24,6 @@
 
 							<form action="/register" method="post" style="margin-top: 30px;margin-left: 360px;">
                                 {{ csrf_field() }}
-                                {{ method_field('PUT') }}
                                 <div class="form-group">
 									<label>Username</label>
 									<input type="text" class="form-control" name="username" style="font-size: 12px; width: 400px" placeholder="Masukkan Username Anda" required>

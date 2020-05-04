@@ -19,4 +19,15 @@ class ProdukTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function testCreate()
+    {
+        $response = $this->post('/register',['username' => 'username',
+        'password' => 'password',
+        'email' => 'email@gmail.com',
+        'no_hp' => '0812',
+        'status' => 'customer'])->assertRedirect('/');
+
+        // $response->assertStatus(302);
+    }
 }

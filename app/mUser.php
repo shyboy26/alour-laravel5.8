@@ -23,7 +23,7 @@ class mUser extends Model
     }
 
     public static function addUser($request){ 
-        mUser::create([
+        $buat = mUser::create([
     		'username' => $request->username,
             'password' => $request->password,
             'email' => $request->email,

@@ -7,12 +7,13 @@ use App\mUser;
 
 class cRegister extends Controller
 {
-    public function __construct(){
-        $this->middleware('islogin');
-    }
+    // public function __construct(){
+    //     $this->middleware('islogin');
+    // }
     
     public function register(Request $request){
         if($request->password == $request->password2){
+            // dd(mUser);
             mUser::addUser($request);
         }
         else{
@@ -25,7 +26,7 @@ class cRegister extends Controller
             return view('founder/tambah_admin');
         }
         else {
-            return view('index');
+            return redirect('/');
         }
     }
 }
