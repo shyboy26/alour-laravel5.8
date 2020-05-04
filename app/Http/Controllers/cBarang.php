@@ -7,6 +7,10 @@ use App\mBarang;
 
 class cBarang extends Controller
 {
+    public function __construct(){
+        $this->middleware('islogin');
+    }
+    
     public function getAllBarang(){
         $barang = mBarang::getAllBarang();
         return view('customer/data_barang', ['barang' => $barang, 'judul' => 'Menampilkan Seluruh Barang']);

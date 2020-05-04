@@ -9,6 +9,10 @@ use App\mToko;
 
 class cSewa extends Controller
 {
+    public function __construct(){
+        $this->middleware('islogin');
+    }
+    
     public function getTransaksiByToko(Request $request){
         $user = $request->session()->get('user');
         $toko = mToko::where('id_user', $user->id_user)->first();

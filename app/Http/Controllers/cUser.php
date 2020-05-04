@@ -7,6 +7,14 @@ use App\mUser;
 
 class cUser extends Controller
 {
+    public function __construct(){
+        $this->middleware('islogin',['except' => 'loginpage']);
+    }
+
+    public function loginpage(){
+        return view('index');
+    }
+
     public function isLogin(Request $request){
         if($request->session()->has('user')){
             $user = $request->session()->get('user');

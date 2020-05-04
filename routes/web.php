@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'cUser@isLogin');
+// Route::get('/', 'cUser@isLogin');
+Route::get('/', 'cUser@loginpage');
 
 Route::get('/login', 'cUser@login');
 Route::get('/logout', 'cUser@logout');

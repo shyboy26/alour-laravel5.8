@@ -7,6 +7,10 @@ use App\mToko;
 
 class cToko extends Controller
 {
+    public function __construct(){
+        $this->middleware('islogin');
+    }
+    
     public function getAllToko(){
         $toko = mToko::getAllToko();
         return view('founder/list_toko', ["toko" => $toko]);

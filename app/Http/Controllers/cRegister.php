@@ -7,6 +7,10 @@ use App\mUser;
 
 class cRegister extends Controller
 {
+    public function __construct(){
+        $this->middleware('islogin');
+    }
+    
     public function register(Request $request){
         if($request->password == $request->password2){
             mUser::addUser($request);
