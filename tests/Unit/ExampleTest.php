@@ -16,4 +16,12 @@ class ExampleTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
+
+
+    /** @test */
+    public function cobaTest()
+    {
+      $response = $this->get('/admin/data_sewa')->assertRedirect('/');
+    }
 }

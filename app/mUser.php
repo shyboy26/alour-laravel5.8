@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class mUser extends Model
 {
     protected $table = 'user';
+    protected $primaryKey = 'id_user';
     protected $fillable = [
         'username', 'password', 'email', 'no_hp', 'status'
     ];
-    public $primaryKey = 'id_user';
+    // public $primaryKey = 'id_user';
     public $timestamps = false;
     
     public function toko(){
