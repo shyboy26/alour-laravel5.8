@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\mBarang;
+use Validator;
 
 class cBarang extends Controller
 {
-    public function __construct(){
-        $this->middleware('islogin');
-    }
+    // public function __construct(){
+    //     $this->middleware('islogin');
+    // }
     
     public function getAllBarang(){
         $barang = mBarang::getAllBarang();
@@ -38,21 +39,77 @@ class cBarang extends Controller
     }
     public function addBarang(Request $request){
         $barang = new mBarang();
-        $barang->id_toko = $request->session()->get('toko')->id_toko;
-        $barang->id_user = $request->session()->get('user')->id_user;
+        $barang->id_toko = $request->id_toko;
+        $barang->id_user = $request->id_user;
         $barang->nama_barang = $request->nama_barang;
         $barang->stok = $request->stok;
         $barang->harga = $request->harga;
         $barang->gambar = ('/barang/');
         $barang->deskripsi = $request->deskripsi;
-        $barang->save();
+        // $barang->save();
         $file = $request->file('file');
-        $idtoko = strval($request->session()->get('toko')->id_toko);
+        // $idtoko = strval($request->session()->get('toko')->id_toko);
         $file->move(public_path('barang'), $idtoko.'_'.$barang->id_barang);
         $barang->gambar = ('/barang/'.$idtoko.'_'.$barang->id_barang);
         $barang->save();
-        return \redirect('/admin/data_barang');
+        return response()->json([
+            "Status" => "OK",
+            "Data" => $barang
+        ], 200);
+        // return \redirect('/admin/data_barang');
     }
+
+    public function addBarangAdmin(Request $request)
+    {
+      
+        
+
+
+        $barang = new mBarang();
+        $barang->id_toko = $request->id_toko;
+        $barang->id_user = $request->id_user;
+        $barang->nama_barang = $request->nama_barang;
+        $barang->stok = $request->stok;
+        $barang->harga = $request->harga;
+        $barang->gambar = ('/barang/');
+        $barang->deskripsi = $request->deskripsi;
+        // $barang->save();
+        // $file = $request->file('file');
+        // $idtoko = strval($request->session()->get('toko')->id_toko);
+        // $file->move(public_path('barang'), $idtoko.'_'.$barang->id_barang);
+        $barang->gambar = ('/barang/'.$barang->id_toko.'_'.$barang->id_barang);
+        $barang->save();
+        // return response()->json([
+        //     "Status" => "OK",
+        //     "Data" => $barang
+        // ], 200);
+        return redirect('/admin/data_barang');
+    }
+
+    public function cekAddBarang(Request $request)
+    {
+        $barang = new mBarang();
+        $barang->id_toko = $request->id_toko;
+        $barang->id_user = $request->id_user;
+        $barang->nama_barang = $request->nama_barang;
+        $barang->stok = $request->stok;
+        $barang->harga = $request->harga;
+        $barang->gambar = $request->gambar;
+        $barang->deskripsi = $request->deskripsi;
+        $validator = Validator::make($request->all(), [
+            'nama_barang' => 'required',
+            'stok' => 'required',
+            'harga' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
+
+           return response()->json($barang, 200);
+        
+    }
+
     public function editBarang($id){
         $barang = mBarang::find($id);
         return view('admin/edit_barang', ['barang' => $barang]);

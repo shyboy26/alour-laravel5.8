@@ -56,7 +56,7 @@
         <tr align='center'>
                     <td>1</td>
                     <td>{{ $t->toko->nama_toko }}</td>
-                    <td>{{ $t->user->username }}</td>
+                    <td>{{ $t->user->name }}</td>
                     <td>{{ $t->barang->nama_barang }}</td>
                     <td>{{ $t->jumlah_barang }}</td>
                     <td>{{ $t->tgl_transaksi }}</td>

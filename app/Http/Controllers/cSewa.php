@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\mTransaksi;
 use App\mBarang;
 use App\mToko;
-
+use App\User;
+use Validator;
 class cSewa extends Controller
 {
-    public function __construct(){
-        $this->middleware('islogin');
-    }
+    // public function __construct(){
+    //     $this->middleware('islogin');
+    // }
     
     public function getTransaksiByToko(Request $request){
         
@@ -21,6 +22,9 @@ class cSewa extends Controller
         if($toko == null) return view('admin/auth_toko');
         $request->session()->put('toko', $toko);
         $transaksi = mTransaksi::where('id_toko', $toko->id_toko)->get();
+        foreach($transaksi as $t){
+            $t->user = User::where('id_user', $t->id_user)->first();
+        }
         //return $transaksi;
         return view('admin/data_sewa', ['transaksi' => $transaksi]);
     }
@@ -58,6 +62,37 @@ class cSewa extends Controller
     public function addTransaksi(Request $request){
         mTransaksi::addTransaksi($request);
         return redirect('/customer/transaksi');
+    }
+
+    public function addTransaksiTest(Request $req)
+    {
+
+        $validator = Validator::make($req->all(), [
+            'nama_barang' => 'required',
+            'stok' => 'required',
+            'harga' => 'required',
+            'tgl_digunakan' => 'required',
+            'tgl_kembali' => 'required',
+            'durasi_sewa' => 'required',
+            'jumlah_barang' =>'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
+        else{
+            if($req->stok >= $req->jumlah){
+                $req->stok -= $req->jumlah;
+                return response()->json([
+                    "Status" => "transaksi berhasil"
+                ], 200);
+            } else {
+                return response()->json([
+                    "Status" => "transaksi gagal, stok barang tidak tersedia"
+                ], 401);
+            }
+        }
+
+       
     }
 
     public function updateTransaksi($id, Request $request){

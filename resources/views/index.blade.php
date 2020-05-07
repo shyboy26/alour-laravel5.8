@@ -80,7 +80,7 @@ if (isset($_POST['login_btn'])) {
 										<td style="font-size: 14px">Username :</td>
 									</tr>
 									<tr>
-										<td><input type="text" name="username" class="textInput"></td>
+										<td><input type="text" name="email" class="textInput"></td>
 									</tr>
 									<tr>
 										<td style="font-size: 14px">Password :</td>

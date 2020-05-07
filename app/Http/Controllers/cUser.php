@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\mUser;
+use App\User;
 
 class cUser extends Controller
 {
-    public function __construct(){
-        $this->middleware('islogin',['except' => 'loginpage']);
-    }
+    // public function __construct(){
+    //     $this->middleware('islogin',['except' => 'loginpage']);
+    // }
 
     public function loginpage(){
         return view('index');
@@ -28,8 +29,11 @@ class cUser extends Controller
             return view('index');
         }
     }
-    public function login(Request $request){
-        $user = mUser::where('username', $request->username)->where('password', $request->password)->get();
+
+    public function loginUser(Request $request)
+    {
+        $user = User::where('email', $request->email)->where('password', $request->password)->get();
+        dd($user);
         if($user->count() == 1){
             $request->session()->put('user', $user[0]);
         } else {
@@ -44,13 +48,31 @@ class cUser extends Controller
         return redirect('/admin/data_sewa');
     }
 
+    public function login(Request $request){
+        $user = User::where('email', $request->email)->where('password', $request->password)->first();
+        // dd($user);
+        // dd($user->count());
+        if($user){
+            $request->session()->put('user', $user);
+        } else {
+            echo "<script type='text/javascript'>alert('Username atau Password salah');</script>";
+            return view('index');
+        }
+        if($user['status'] == 'founder')
+        return redirect('/founder/list/admin');
+        else if($user['status'] == 'customer')
+        return redirect('/customer/barang');
+        else if($user['status'] == 'admin')
+        return redirect('/admin/data_sewa');
+    }
+
     public function logout(Request $request){
         $request->session()->flush();
         return redirect('/');
     }
 
     public function getUserByStatus($status){
-        $user = mUser::getUserByStatus($status);
+        $user = User::getUserByStatus($status);
         if($status == 'admin')
         return view('founder/list_admin', ['admin' => $user]);
         else if($status == 'customer')
@@ -59,7 +81,7 @@ class cUser extends Controller
 
     public function getUserByName($status, Request $request){
         $nama = $request->cari;
-        $user = mUser::where('status', $status)->where('username', 'like', '%'.$nama.'%')->get();
+        $user = User::where('status', $status)->where('username', 'like', '%'.$nama.'%')->get();
         //return $user;
         if($status == 'admin')
         return view('founder/list_admin', ['admin' => $user]);
@@ -68,7 +90,7 @@ class cUser extends Controller
     }
 
     public function editUser($id){
-        $user = mUser::find($id);
+        $user = User::find($id);
         if($user->status == 'admin')
         return view('founder/update_admin', ['user' => $user]);
         else
@@ -76,7 +98,14 @@ class cUser extends Controller
     }
 
     public function updateUser($id, Request $request){
-        mUser::updateUser($id, $request);
+        if($request->password == $request->password2){
+            User::updateUser($id, $request);
+            echo "<script type='text/javascript'>alert('Profil berhasil diupdate');</script>";
+            return $this->profil($request);
+        }else{
+            echo "<script type='text/javascript'>alert('Password Confirm tidak sesuai');</script>";
+            return $this->profil($request);
+        }
         if($request->session()->get('user')->status == 'founder'){
             if($request->status == 'admin')
             return redirect('founder/list/admin');
@@ -91,7 +120,7 @@ class cUser extends Controller
     }
 
     public function deleteUser($id){
-        mUser::deleteUser($id);
+        User::deleteUser($id);
         return redirect('founder/list/admin');
     }
 

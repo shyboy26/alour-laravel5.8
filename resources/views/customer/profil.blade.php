@@ -29,11 +29,11 @@
 								</tr>
 								<tr>
 									<td>
-										<input type="text" name="username" value="{{ $user->username }}" class="textInput" style="width: 900px;height:30px;margin-bottom: 5px;padding: 5px">
+										<input type="text" name="username" value="{{ $user->name }}" class="textInput" style="width: 900px;height:30px;margin-bottom: 5px;padding: 5px">
 									</td>
 								</tr>
 								<tr>
-									<td>Password</td>
+									<td>New Password</td>
 								</tr>
 								<tr>
 									<td>

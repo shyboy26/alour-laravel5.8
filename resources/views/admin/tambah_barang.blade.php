@@ -15,10 +15,12 @@
 		<section>
 			<div class="row">
 				<div class="col-sm-12" style="padding-right: 0px">
-					<center><h4 style="padding-bottom: 10px">Tambah Barang</h4></center><hr>
-					<form method="post" action="/admin/barang/tambah" enctype="multipart/form-data" style="margin-top: 6%;margin-left: 10%">
+					<center><h4 style="padding-bottom: 10px">Tambah Barang {{session()->get('toko')->id_toko}}</h4></center><hr>
+					<h1>{{Session::get('email')}}</h1>
+					<form method="post" action="/admin/barang/tambahBarang" enctype="multipart/form-data" style="margin-top: 6%;margin-left: 10%">
                         {{ csrf_field() }}
-						{{ method_field('PUT') }}
+						{{-- {{ method_field('PUT') }} --}}
+					
                         <table width="900px">
 							<tr>
 								<td>Nama Barang</td>
@@ -48,6 +50,12 @@
 								<td>Deskripsi</td>
 								<td>
 									<input type="textarea" name="deskripsi" class="textInput" style="width: 600px;height:40px;margin-left:10px;margin-bottom: 7px;padding:5px">
+                                </td>
+							</tr>
+							<tr>
+								<td>
+									<input type="hidden" name="id_toko" class="textInput" style="width: 600px;height:40px;margin-left:10px;margin-bottom: 7px;padding:5px" value="{{session()->get('toko')->id_toko}}">
+									<input type="hidden" name="id_user" class="textInput" style="width: 600px;height:40px;margin-left:10px;margin-bottom: 7px;padding:5px" value="{{session()->get('user')->id_user}}">
                                 </td>
 							</tr>
 							<tr>

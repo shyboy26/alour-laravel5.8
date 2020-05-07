@@ -15,6 +15,7 @@
 Route::get('/', 'cUser@loginpage');
 
 Route::get('/login', 'cUser@login');
+// Route::post('/login','cUser@loginUser');
 Route::get('/logout', 'cUser@logout');
 
 Route::get('/form_register', function(){
@@ -56,7 +57,10 @@ Route::put('/admin/toko/buat', 'cToko@addToko');
 Route::get('/admin/tambah_barang', function(){
     return view('admin/tambah_barang');
 });
-Route::put('/admin/barang/tambah', 'cBarang@addBarang');
+Route::get('/admin/barang/tambah', 'cBarang@addBarang');
+Route::post('/admin/barang/tambahBarang','cBarang@addBarangAdmin');
+// Route::post('/admin/barang/tambahBarangTest','cBarang@cekAddBarang');
+Route::post('/admin/barang/tambahBarangTest','cBarang@cekAddBarang');
 
 Route::get('/admin/data_sewa', 'cSewa@getTransaksiByToko');
 Route::get('/admin/cari_sewa', 'cSewa@getTransaksiByCari');
@@ -98,3 +102,16 @@ Route::get('/customer/transaksi/konfirm_delete/{id}', function($id){
 Route::get('/coba', function(){
     return view('customer/data_barang');
 });
+
+
+
+
+//cobatweet
+Route::get('/users/getTweets/{id}', ['uses' => 'UserController@getTweets', 'as' => 'users.getTweets']);
+Route::resource('users', 'UserController');
+Route::resource('tweet', 'TweetController');
+Route::post('/tweet/store','NewTweetController@insertTweet');
+
+// Auth::routes();
+
+Route::get('/home', 'HomeController@index');

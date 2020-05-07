@@ -55,6 +55,19 @@ class mTransaksi extends Model
         ]);
     }
 
+    public static function addTransaksiTest($req){
+        if($req->stok >= $req->jumlah){
+            $req->stok -= $req->jumlah;
+            return response()->json([
+                "Status" => "transaksi berhasil"
+            ], 200);
+        } else {
+            return response()->json([
+                "Status" => "transaksi gagal, stok barang tidak tersedia"
+            ], 401);
+        }
+    }
+
     public static function updateTransaksi($id, $req){
         $transaksi = mTransaksi::find($id);
         $transaksi->status_transaksi = $req->status_baru;

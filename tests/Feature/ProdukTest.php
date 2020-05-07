@@ -13,21 +13,33 @@ class ProdukTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
-    {
-        $response = $this->get('/');
+    // public function testExample()
+    // {
+    //     $response = $this->get('/');
 
-        $response->assertStatus(200);
-    }
+    //     $response->assertStatus(200);
+    // }
 
-    public function testCreate()
+    public function testCreatePassordMatch()
     {
         $response = $this->post('/register',['username' => 'username',
-        'password' => 'password',
+        'password' => '123qwe',
+        'password2' => '123qwe',
         'email' => 'email@gmail.com',
         'no_hp' => '0812',
         'status' => 'customer'])->assertRedirect('/');
-
-        // $response->assertStatus(302);
     }
+
+    // public function testCreatePasswordNotSame()
+    // {
+    //     $response = $this->post('/register',['username' => 'username',
+    //     'password' => 'password',
+    //     'email' => 'email@gmail.com',
+    //     'no_hp' => '0812',
+    //     'status' => 'customer'])->assertRedirect('/');
+
+    //     // $response->assertStatus(302);
+    // }
+
+    
 }

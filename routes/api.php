@@ -13,6 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::post('/admin/barang/tambahBarang','cBarang@addBarangAdmin');
+
+
+//Testing
+Route::post('/admin/barang/tambahBarangTest','cBarang@cekAddBarang');
+
+Route::post('/tweet/store','NewTweetController@insertTweet');
+Route::post('/customer/sewa','cSewa@addTransaksiTest');
+Route::post('/login', 'cUser@login');
+Route::get('/', 'cUser@loginpage');

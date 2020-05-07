@@ -7,9 +7,9 @@ use App\mUser;
 
 class cUserDetail extends Controller
 {
-    public function __construct(){
-        $this->middleware('islogin');
-    }
+    // public function __construct(){
+    //     $this->middleware('islogin');
+    // }
 
     public function getUserByStatus($status){
         $user = mUser::getUserByStatus($status);
